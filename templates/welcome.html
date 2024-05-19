@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Your Library</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 90px;
+            text-align: center;
+        }
+        .quote {
+            font-size: 30px;
+            margin-bottom: 30px;
+            color: red;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+        }
+        .btn {
+            margin: 0 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <u><div class="quote">{{ quote }}</div></u>
+        <div class="btn-container">
+            <a href="{{ url_for('routes.register') }}" class="btn btn-primary">Register</a>
+            <a href="{{ url_for('routes.login') }}" class="btn btn-secondary">Login</a>
+        </div>
+    </div>
+</body>
+</html>

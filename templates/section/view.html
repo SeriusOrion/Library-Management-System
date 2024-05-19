@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIEW BOOKS</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="display-2">Books of the section: {{section.name}}</h2>
+        <div class="table-container">
+            <table class="table table-striped"> 
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Date Created</th>
+                        <th>Description</th>
+                        <th>Copies</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in section.ebooks %}
+                        <tr>
+                            <td>{{ book.id }}</td>
+                            <td>{{ book.title }}</td>
+                            <td>{{ book.author }}</td>
+                            <td>{{ book.date_created }}</td>
+                            <td>{{ book.description }}</td>
+                            <td>{{ book.copies }}</td>
+                            <td>
+                                <a href="/admin/books/edit/{{ book.id }}" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="/admin/books/delete/{{ book.id }}" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+    </div>
+</body>
+</html>

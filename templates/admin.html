@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Library Management System - Admin Dashboard</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 250px;
+                background-color: #343a40;
+                padding-top: 20px;
+            }
+            .sidebar-item {
+                color: #fff;
+                padding: 10px 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .main-content {
+                margin-left: 250px;
+                padding: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="sidebar">
+            <h4 class="text-white text-center">Admin Dashboard</h4>
+            <nav>
+                <ul class="list-unstyled">
+                    <li class="sidebar-item"><a href="/admin/sections" style="color: #fff;">Manage Sections</a></li>
+                    <li class="sidebar-item"><a href="/admin/books" style="color: #fff;">Manage Books</a></li>
+                    <li class="sidebar-item"><a href="/admin/manage_requests" style="color: #fff;">Manage Requests</a></li>
+                    <li class="sidebar-item"><a href="/logout" style="color: #fff;">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="main-content">
+            <b><u><h2 style="color: red;">Welcome to the Library Management System Admin Dashboard</h2></u></b>
+            <p style="font-size:22px ;">This is where you can manage sections, books, view statistics, and perform administrative tasks.</p>
+        </div>
+    </body>
+</html>

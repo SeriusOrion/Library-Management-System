@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+                padding: 10px;
+                text-align: center;
+                margin:10px;
+            }
+      .table-container {
+               margin-left: 50px;
+                width: 110%;
+
+            }  
+            .flask-message {
+                text-align: center;
+            }
+      
+    </style>
+</head>
+<body>
+    <div class="flask-message">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            {% if category =='error' %}
+                <div class="alert alert-danger alter-dismissible fade show " role="alert">
+                    {{ message }}
+                </div>
+            {% else %}
+                <div  class="alert alert-success alter-dismissible fade show" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</div>
+<u><h2 class="text-center mt-4" style="color: red;">Welcome to Your Dashboard</h2></u>
+        <h3 class="text-center mt-4">Your Books</h3>
+    <div class="container"><br>
+        <div class="table-container">
+            <table class="table table-striped" style="width:120%;">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Description</th>
+                    <th>Issued Date</th>
+                    <th>Return Date</th>
+                    <th>Link</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user_book in granted_books %}
+                    <tr>
+                        <td>{{ user_book.book.title }}</td>
+                        <td>{{ user_book.book.author }}</td>
+                        <td>{{ user_book.book.description }}</td>
+                        <td>{{ user_book.issued_date }}</td>
+                        <td>{{ user_book.return_date }}</td>
+                        <td><a href="{{ user_book.book.blink }}">{{ user_book.book.blink }}</a></td>
+                        <td>
+                            <div class="row align-items-end">
+                                <div class="col-md-6">
+                                    <form action="{{ url_for('routes.return_book', request_id=user_book.id, action='returned') }}" method="GET">
+                                        <input type="hidden" name="book_id" value="{{ user_book.book_id }}">
+                                        <input type="hidden" name="user_id" value="{{ user_book.user_id }}">
+                                        <input type="hidden" name="username" value="{{ user_book.username }}">
+                                        <input type="hidden" name="ebook" value="{{ user_book.ebook }}">
+                                        <button type="submit" class="btn btn-sm btn-secondary" >Return</button>
+                                    </form>
+                                    <a href="{{ url_for('routes.give_feedback', book_id=user_book.book_id, user_id=user_book.user_id) }}" class="btn btn-sm btn-success" style="color: white;margin-top: 5px;">Feedback</a>
+                                </div>
+                              
+                                </div>
+                            </div>
+                        </td>
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

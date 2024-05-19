@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Requests</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 250px;
+                background-color: #343a40;
+                padding-top: 20px;
+            }
+            .sidebar-item {
+                color: #fff;
+                padding: 10px 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .container {
+                padding: 20px;
+                margin-left: 250px;
+            }
+            .table-container {
+                margin-top: 20px;
+            }
+            .flask-message {
+                text-align: center;
+            }
+      
+        </style>
+</head>
+<body>
+    <div class="flask-message">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            {% if category =='error' %}
+                <div class="alert alert-danger alter-dismissible fade show " role="alert">
+                    {{ message }}
+                </div>
+            {% else %}
+                <div  class="alert alert-success alter-dismissible fade show" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</div>
+    <div class="sidebar">
+        <h5 class="text-white text-center">Admin Dashboard</h5>
+        <nav>
+            <ul class="list-unstyled">
+                <li class="sidebar-item"><a href="/admin/sections"style="color: #fff;">Manage Sections</a></li>
+                <li class="sidebar-item"><a href="/admin/books"style="color: #fff;">Manage Books</a></li>
+                <li class="sidebar-item"><a href="/admin/manage_requests"style="color: #fff;">Manage Requests</a></li>
+                <li class="sidebar-item"><a href="/logout"style="color: #fff;">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <h3>MANAGE REQUESTS</h3>
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Book Title</th>
+                        <th>Request Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for request in requests %}
+                    <tr>
+                        <td>{{ request.username }}</td>
+                        <td>{{ request.ebook }}</td>
+                        <td>{{ request.request_date }}</td>
+                            <td class="d-flex justify-content-between">
+                            {% if request.status == 'Pending' %}
+                            <div class="d-flex" style="gap: 10px;">
+                            <form action="{{ url_for('routes.handle_request_action', request_id=request.id, action='grant') }}" method="GET">
+                                <input type="hidden" name="username" value="{{ request.username }}">
+                                <input type="hidden" name="ebook" value="{{ request.ebook }}">
+                                <button type="submit" class="btn btn-sm btn-primary">Grant</button>
+                            </form>
+                            <form action="{{ url_for('routes.handle_request_action', request_id=request.id, action='reject') }}" method="GET">
+                                <input type="hidden" name="username" value="{{ request.username }}">
+                                <input type="hidden" name="ebook" value="{{ request.ebook }}">
+                                <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                            </form>
+                            </div>
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+            <div class="container">
+            <h3>ACCEPTED REQUESTS</h3>
+            <div class="table-container">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Book Title</th>
+                            <th>Request Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in accepted_requests %}
+                        <tr>
+                            <td>{{ request.username }}</td>
+                            <td>{{ request.ebook }}</td>
+                            <td>{{ request.request_date }}</td>
+                            <td>
+                                <form action="{{ url_for('routes.handle_request_action', request_id=request.id, action='revoke') }}" method="GET">
+                                    <input type="hidden" name="username" value="{{ request.username }}">
+                                    <input type="hidden" name="ebook" value="{{ request.ebook }}">
+                                    <button type="submit" class="btn btn-sm btn-warning" >Revoke</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+                </div>
+            </div>
+                <div class="container">
+                    <h3>RETURNED REQUESTS</h3>
+                    <div class="table-container">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Book Title</th>
+                                    <th>Request Date</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for request in returned_requests %}
+                                <tr>
+                                    <td>{{ request.username }}</td>
+                                    <td>{{ request.ebook }}</td>
+                                    <td>{{ request.request_date }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

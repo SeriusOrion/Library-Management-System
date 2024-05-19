@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Book Feedback</title>
+    <style>
+        .container{
+            margin-left: 60px;
+            margin-top: 20px;
+        }
+        .flask-message {
+                text-align: center;
+            }
+      
+    </style>
+</head>
+<body>
+    <div class="flask-message">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            {% if category =='error' %}
+                <div class="alert alert-danger alter-dismissible fade show " role="alert">
+                    {{ message }}
+                </div>
+            {% else %}
+                <div  class="alert alert-success alter-dismissible fade show" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</div>
+
+    <div class="container">
+    <br><u><h2 style="color: red;">Book Feedback Form</h2></u><br>
+    <form action="{{ url_for('routes.give_feedback',book_id=book_id,user_id=user_id) }}" method="post">
+        <label for="feedback" style="font-size: 20px;">Feedback:</label><br>
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <input type="hidden" name="book_id" value="{{ book_id}}">
+        <textarea id="feedback" name="feedback" rows="5" cols="50" placeholder="Enter your thoughts here."></textarea><br><br>
+        <button type="submit" class="btn btn-success" value="Submit">Submit</button>
+    </form>
+    </div>
+</body>
+</html>

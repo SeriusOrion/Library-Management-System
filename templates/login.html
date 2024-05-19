@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport", content="width=device-width,initial-scale=1.0">
+        <title>LOGIN FORM</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: #f8f9fa;
+            }
+            .login-container {
+                max-width: 400px;
+                margin: 100px auto;
+                padding: 30px;
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .login-container h2 {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            .form-control {
+                height: 50px;
+                border-radius: 25px;
+                padding: 10px 20px;
+            }
+            .btn-login {
+                border-radius: 25px;
+                padding: 10px 20px;
+            }
+            .flask-message {
+                text-align: center;
+            }
+      
+        </style>
+    </head>
+    <body>
+        <div class="flask-message">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            {% if category =='error' %}
+                <div class="alert alert-danger alter-dismissible fade show " role="alert">
+                    {{ message }}
+                </div>
+            {% else %}
+                <div  class="alert alert-success alter-dismissible fade show" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+        </div>
+           
+        <div class="login-container">
+            <u><h2>Login</h2></u>
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                </div> 
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block btn-login">Login</button>
+                </div>
+            </form>
+            <p class="text-center">Don't have an account? <a href="/register">Sign up</a></p>
+        </div>
+    </body>
+</html>
